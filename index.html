@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doğum İzni Hesaplama</title>
+
+    <meta name="description" content="Doğum ve analık izni tarihlerinizi kolayca hesaplayın.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 20px;
+        }
+
+        .logo {
+            max-width: 1100px;
+            margin: auto;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .hero {
+            max-width: 900px;
+            margin: 60px auto 30px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #667085;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .calculator {
+            max-width: 650px;
+            margin: 30px auto 70px;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .calculator h2 {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d0d5dd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            border: 1px solid #bbf7d0;
+        }
+
+        #result h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #dcfce7;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            color: #667085;
+        }
+
+        @media (max-width: 600px) {
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .calculator {
+                margin: 20px 15px 50px;
+                padding: 25px;
+            }
+
+            .result-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        Doğum İzni Hesaplama
+    </div>
+</header>
+
+<section class="hero">
+
+    <h1>Doğum İzni Hesaplama</h1>
+
+    <p>
+        Tahmini doğum tarihinizi girerek analık izni
+        tarihlerinizi kolayca hesaplayın.
+    </p>
+
+</section>
+
+
+<div class="calculator">
+
+    <h2>İzin Hesaplama</h2>
+
+    <div class="form-group">
+
+        <label for="date">
+            Tahmini doğum tarihi
+        </label>
+
+        <input
+            type="date"
+            id="date"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="pregnancy">
+            Gebelik durumu
+        </label>
+
+        <select id="pregnancy">
+
+            <option value="single">
+                Tekil gebelik
+            </option>
+
+            <option value="multiple">
+                Çoğul gebelik
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <button onclick="calculate()">
+        HESAPLA
+    </button>
+
+
+    <div id="result">
+
+        <h3>Hesaplama Sonucu</h3>
+
+        <div class="result-row">
+
+            <span>Doğum öncesi izin başlangıcı</span>
+
+            <strong id="before"></strong>
+
+        </div>
+
+
+        <div class="result-row">
+
+            <span>Tahmini doğum tarihi</span>
+
+            <strong id="birth"></strong>
+
+        </div>
+
+
+        <div class="result-row">
+
+            <span>Doğum sonrası izin bitişi</span>
+
+            <strong id="after"></strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    © 2026 Doğum İzni Hesaplama
+
+</footer>
+
+
+<script>
+
+function addDays(date, days) {
+
+    const result = new Date(date);
+
+    result.setDate(result.getDate() + days);
+
+    return result;
+
+}
+
+
+function formatDate(date) {
+
+    return date.toLocaleDateString("tr-TR");
+
+}
+
+
+function calculate() {
+
+    const dateInput =
+        document.getElementById("date").value;
+
+    const pregnancy =
+        document.getElementById("pregnancy").value;
+
+
+    if (!dateInput) {
+
+        alert("Lütfen tahmini doğum tarihini seçin.");
+
+        return;
+
+    }
+
+
+    const birthDate =
+        new Date(dateInput);
+
+
+    /*
+       Şimdilik DEMO hesaplama.
+       Güncel mevzuata göre gerçek hesaplama
+       motorunu bir sonraki aşamada oluşturacağız.
+    */
+
+    const before =
+        addDays(birthDate, -56);
+
+
+    const after =
+        addDays(birthDate, 56);
+
+
+    document.getElementById("before").textContent =
+        formatDate(before);
+
+    document.getElementById("birth").textContent =
+        formatDate(birthDate);
+
+    document.getElementById("after").textContent =
+        formatDate(after);
+
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+</script>
+
+</body>
+</html>
