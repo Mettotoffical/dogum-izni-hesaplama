@@ -1,1071 +1,142 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Analık İzni Hesaplama | 657 ve 4857</title>
-
-<meta name="description"
-content="657 ve 4857 kapsamındaki analık izni, doğum öncesi çalışma ve doğum sonrası izin süresini hesaplayın.">
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:#f5f7fb;
-    color:#172033;
-    line-height:1.5;
-}
-
-header{
-    background:#ffffff;
-    border-bottom:1px solid #e5e7eb;
-    padding:18px 20px;
-}
-
-.header-inner{
-    max-width:1100px;
-    margin:auto;
-    font-size:21px;
-    font-weight:800;
-}
-
-.hero{
-    max-width:900px;
-    margin:45px auto 25px;
-    padding:20px;
-    text-align:center;
-}
-
-.hero h1{
-    font-size:40px;
-    margin-bottom:12px;
-}
-
-.hero p{
-    color:#667085;
-    font-size:17px;
-}
-
-.container{
-    max-width:760px;
-    margin:20px auto 70px;
-    padding:0 15px;
-}
-
-.card{
-    background:#fff;
-    border-radius:20px;
-    padding:30px;
-    margin-bottom:20px;
-    box-shadow:0 8px 30px rgba(0,0,0,.07);
-}
-
-.card h2{
-    margin-bottom:22px;
-    font-size:23px;
-}
-
-.form-group{
-    margin-bottom:22px;
-}
-
-label{
-    display:block;
-    font-weight:700;
-    margin-bottom:8px;
-}
-
-input,
-select{
-    width:100%;
-    padding:14px;
-    border:1px solid #d0d5dd;
-    border-radius:11px;
-    font-size:16px;
-    background:#fff;
-}
-
-.radio-group{
-    display:grid;
-    gap:10px;
-}
-
-.radio-option{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:14px;
-    border:1px solid #d0d5dd;
-    border-radius:11px;
-    cursor:pointer;
-}
-
-.radio-option input{
-    width:auto;
-}
-
-button{
-    width:100%;
-    padding:16px;
-    border:0;
-    border-radius:12px;
-    background:#2563eb;
-    color:#fff;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-#result{
-    display:none;
-}
-
-.summary{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-bottom:22px;
-}
-
-.summary-box{
-    background:#f8fafc;
-    border:1px solid #e2e8f0;
-    border-radius:14px;
-    padding:18px;
-}
-
-.summary-box span{
-    display:block;
-    color:#667085;
-    font-size:14px;
-    margin-bottom:5px;
-}
-
-.summary-box strong{
-    font-size:20px;
-}
-
-.info{
-    padding:16px;
-    background:#eff6ff;
-    border:1px solid #bfdbfe;
-    border-radius:12px;
-    margin-bottom:15px;
-}
-
-.warning{
-    padding:16px;
-    background:#fffbeb;
-    border:1px solid #fde68a;
-    border-radius:12px;
-    margin-bottom:15px;
-}
-
-.success{
-    padding:16px;
-    background:#f0fdf4;
-    border:1px solid #bbf7d0;
-    border-radius:12px;
-    margin-bottom:15px;
-}
-
-.detail-list{
-    margin-top:15px;
-}
-
-.detail{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:13px 0;
-    border-bottom:1px solid #eee;
-}
-
-.detail:last-child{
-    border-bottom:0;
-}
-
-.detail strong{
-    text-align:right;
-}
-
-footer{
-    background:#fff;
-    border-top:1px solid #e5e7eb;
-    padding:30px 20px;
-    text-align:center;
-    color:#667085;
-    font-size:14px;
-}
-
-.small{
-    color:#667085;
-    font-size:13px;
-    margin-top:8px;
-}
-
-.hidden{
-    display:none;
-}
-
-@media(max-width:600px){
-
-    .hero h1{
-        font-size:31px;
-    }
-
-    .card{
-        padding:22px;
-    }
-
-    .summary{
-        grid-template-columns:1fr;
-    }
-
-    .detail{
-        flex-direction:column;
-    }
-
-    .detail strong{
-        text-align:left;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doğum İzni Hesaplama</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h2 { margin-top: 0; font-size: 20px; color: #111; text-align: center; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
+        select, input {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover { background: #333; }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .result b { color: #000; }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <div class="header-inner">
-        Analık İzni Hesaplama
-    </div>
-</header>
-
-<section class="hero">
-    <h1>Analık İzni Hesaplama</h1>
-    <p>
-        657 ve 4857 kapsamındaki analık izni sürelerini,
-        doğum öncesi çalışma ve ilgili tatil dönemlerini dikkate alarak hesaplayın.
-    </p>
-</section>
-
 <div class="container">
+    <h2>Doğum İzni Hesaplama</h2>
+    
+    <div class="form-group">
+        <label for="kanun">Çalışma Statüsü</label>
+        <select id="kanun">
+            <option value="657">657 Memur</option>
+            <option value="4857">4857 İşçi</option>
+        </select>
+    </div>
 
-<div class="card">
+    <div class="form-group">
+        <label for="gebelikTipi">Gebelik Durumu</label>
+        <select id="gebelikTipi">
+            <option value="tekil">Tekil Gebelik</option>
+            <option value="cogul">Çoğul Gebelik</option>
+        </select>
+    </div>
 
-<h2>Bilgilerinizi Girin</h2>
+    <div class="form-group">
+        <label for="doktorRaporu">Çalışabilir Raporu Durumu</label>
+        <select id="doktorRaporu">
+            <option value="yok">Normal İzin (Çalışmayacak)</option>
+            <option value="var">Çalışabilir Raporu Alındı (5 Hafta Aktarım)</option>
+        </select>
+    </div>
 
-<div class="form-group">
+    <div class="form-group">
+        <label for="tahminiDogumTarihi">Tahmini Doğum Tarihi</label>
+        <input type="date" id="tahminiDogumTarihi">
+    </div>
 
-<label for="law">
-Çalışma statünüz
-</label>
+    <button onclick="hesapla()">HESAPLA</button>
 
-<select id="law" onchange="updateForm()">
-
-<option value="">
-Seçiniz
-</option>
-
-<option value="657">
-657 sayılı Devlet Memurları Kanunu
-</option>
-
-<option value="4857">
-4857 sayılı İş Kanunu
-</option>
-
-</select>
-
+    <div id="sonucAlani" class="result" style="display:none;"></div>
 </div>
-
-
-<div class="form-group">
-
-<label for="job">
-Görev / çalışma türü
-</label>
-
-<select id="job">
-
-<option value="other">
-Diğer
-</option>
-
-<option value="teacher">
-Öğretmen
-</option>
-
-</select>
-
-<p class="small">
-Öğretmen seçildiğinde MEB eğitim-öğretim takvimi ayrıca değerlendirilir.
-</p>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="pregnancy">
-Gebelik durumu
-</label>
-
-<select id="pregnancy">
-
-<option value="single">
-Tekil gebelik
-</option>
-
-<option value="multiple">
-Çoğul gebelik
-</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Doktor raporu / doğum öncesi çalışma durumu
-</label>
-
-<div class="radio-group">
-
-<label class="radio-option">
-<input type="radio" name="doctor" value="yes">
-Çalışabilir raporum var
-</label>
-
-<label class="radio-option">
-<input type="radio" name="doctor" value="no">
-Çalışabilir raporum yok
-</label>
-
-<label class="radio-option">
-<input type="radio" name="doctor" value="unknown" checked>
-Bilmiyorum
-</label>
-
-</div>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Doğumdan önce çalışmak istiyor musunuz?
-</label>
-
-<div class="radio-group">
-
-<label class="radio-option">
-<input type="radio" name="work" value="yes" checked>
-Evet, çalışacağım
-</label>
-
-<label class="radio-option">
-<input type="radio" name="work" value="no">
-Hayır, çalışmayacağım
-</label>
-
-</div>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="birthDate">
-Tahmini doğum tarihi
-</label>
-
-<input type="date" id="birthDate">
-
-</div>
-
-
-<button onclick="calculate()">
-HESAPLA
-</button>
-
-</div>
-
-
-<div id="result">
-
-<div class="card">
-
-<h2>Hesaplama Sonucu</h2>
-
-<div class="summary">
-
-<div class="summary-box">
-<span>Doğum öncesi temel izin</span>
-<strong id="beforeWeeks"></strong>
-</div>
-
-<div class="summary-box">
-<span>Doğum sonrası temel izin</span>
-<strong id="afterWeeks"></strong>
-</div>
-
-<div class="summary-box">
-<span>Toplam analık izni</span>
-<strong id="totalWeeks"></strong>
-</div>
-
-<div class="summary-box">
-<span>Doğum öncesi çalışma</span>
-<strong id="workWeeks"></strong>
-</div>
-
-</div>
-
-
-<div class="success">
-
-<strong>Doğum öncesi analık izni başlangıcı</strong>
-
-<div id="beforeDate"></div>
-
-<br>
-
-<strong>Tahmini doğum tarihi</strong>
-
-<div id="birthDateResult"></div>
-
-<br>
-
-<strong>Doğum sonrası analık izni bitişi</strong>
-
-<div id="afterDate"></div>
-
-</div>
-
-
-<div id="workAnalysis"></div>
-
-<div id="teacherAnalysis"></div>
-
-<div id="unpaidLeave"></div>
-
-<div id="notice"></div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<footer>
-
-© 2026 Analık İzni Hesaplama
-
-<br><br>
-
-Bu araç bilgilendirme amaçlıdır.
-Kesin izin işlemleri kurumunuzun personel birimi ve güncel mevzuat üzerinden değerlendirilmelidir.
-
-</footer>
-
 
 <script>
+document.getElementById('tahminiDogumTarihi').valueAsDate = new Date();
 
-function parseDate(value){
+function hesapla() {
+    const gebelikTipi = document.getElementById('gebelikTipi').value;
+    const doktorRaporu = document.getElementById('doktorRaporu').value;
+    const tarihStr = document.getElementById('tahminiDogumTarihi').value;
 
-    const parts = value.split("-");
-
-    return new Date(
-        Number(parts[0]),
-        Number(parts[1])-1,
-        Number(parts[2])
-    );
-
-}
-
-
-function addDays(date, days){
-
-    const d = new Date(date);
-
-    d.setDate(d.getDate()+days);
-
-    return d;
-
-}
-
-
-function formatDate(date){
-
-    return date.toLocaleDateString("tr-TR",{
-        day:"2-digit",
-        month:"2-digit",
-        year:"numeric"
-    });
-
-}
-
-
-function daysBetween(start,end){
-
-    return Math.round(
-        (end-start)/(1000*60*60*24)
-    );
-
-}
-
-
-function updateForm(){
-
-    const law=document.getElementById("law").value;
-
-    const job=document.getElementById("job");
-
-    if(law==="4857"){
-
-        job.value="other";
-
-    }
-
-}
-
-
-function getDoctor(){
-
-    return document.querySelector(
-        'input[name="doctor"]:checked'
-    ).value;
-
-}
-
-
-function getWork(){
-
-    return document.querySelector(
-        'input[name="work"]:checked'
-    ).value;
-
-}
-
-
-/*
-====================================================
-2026 GÜNCEL ANALIK İZNİ KURALLARI
-====================================================
-
-Doğum öncesi : 8 hafta
-Doğum sonrası : 16 hafta
-Toplam : 24 hafta
-
-Çoğul gebelik:
-Doğum öncesine +2 hafta
-
-Doktor onayı ile:
-Doğumdan önce son 2 haftaya kadar çalışma
-
-Dolayısıyla:
-
-Tekil:
-8 - 2 = 6 hafta aktarılabilir
-
-Çoğul:
-10 - 2 = 8 hafta aktarılabilir
-
-====================================================
-*/
-
-
-function calculate(){
-
-    const law=document.getElementById("law").value;
-
-    if(!law){
-
-        alert("Lütfen 657 veya 4857 kapsamından birini seçin.");
-
+    if (!tarihStr) {
+        alert("Lütfen doğum tarihi seçiniz.");
         return;
-
     }
 
-
-    const birthInput=document.getElementById("birthDate").value;
-
-    if(!birthInput){
-
-        alert("Lütfen tahmini doğum tarihini seçin.");
-
-        return;
-
-    }
-
-
-    const birthDate=parseDate(birthInput);
-
-    const pregnancy=document.getElementById("pregnancy").value;
-
-    const doctor=getDoctor();
-
-    const work=getWork();
-
-    const job=document.getElementById("job").value;
-
-
-    /*
-    2026 güncel temel süreler
-    */
-
-    let beforeWeeks=8;
-
-    let afterWeeks=16;
-
-
-    if(pregnancy==="multiple"){
-
-        beforeWeeks=10;
-
-    }
-
-
-    const beforeDays=beforeWeeks*7;
-
-    const afterDays=afterWeeks*7;
-
-    const totalDays=beforeDays+afterDays;
-
-
-    const beforeStart=
-        addDays(birthDate,-beforeDays);
-
-
-    /*
-    Çalışma hakkı:
-    Doktor raporu yoksa veya bilinmiyorsa
-    sistem aktarım hesabını otomatik olarak
-    kesinleştirmez.
-
-    Kullanıcı "bilmiyorum" dediğinde
-    standart izin hesabı gösterilir.
-    */
-
-
-    let maxWorkDays=0;
-
-    let workTransferDays=0;
-
-
-    if(work==="yes" && doctor==="yes"){
-
-        maxWorkDays=14;
-
-        workTransferDays=beforeDays-maxWorkDays;
-
-    }
-
-
-    /*
-    Çalışma raporu bilinmiyorsa standart
-    temel hesaplama gösterilir.
-    */
-
-    let actualAfterDays=afterDays;
-
-    let workMessage="";
-
-
-    if(work==="yes" && doctor==="yes"){
-
-        actualAfterDays=
-            afterDays+workTransferDays;
-
-        workMessage=`
-        <div class="success">
-
-        <strong>Doğum öncesi çalışma hesabı</strong>
-
-        <div class="detail-list">
-
-        <div class="detail">
-        <span>Doğum öncesi temel süre</span>
-        <strong>${beforeWeeks} hafta (${beforeDays} gün)</strong>
-        </div>
-
-        <div class="detail">
-        <span>Doğuma kadar çalışılabilecek son bölüm</span>
-        <strong>14 gün</strong>
-        </div>
-
-        <div class="detail">
-        <span>Doğum sonrasına aktarılabilecek azami süre</span>
-        <strong>${workTransferDays} gün</strong>
-        </div>
-
-        </div>
-
-        <p class="small">
-        Sağlık durumunun uygun olduğunu gösteren doktor raporuna
-        dayanarak doğumdan önce çalışılan fiilî süre,
-        doğum sonrası analık iznine eklenir.
-        </p>
-
-        </div>
-        `;
-
-    }
-    else if(work==="yes" && doctor==="unknown"){
-
-        workMessage=`
-        <div class="warning">
-
-        <strong>Doktor raporu bilinmiyor</strong>
-
-        <p>
-        Doktor raporu bilgisi belirtilmediği için
-        aktarılacak fiilî çalışma süresi kesinleştirilmedi.
-        Sistem standart analık izni hesabını gösteriyor.
-        </p>
-
-        </div>
-        `;
-
-    }
-    else if(work==="yes" && doctor==="no"){
-
-        workMessage=`
-        <div class="warning">
-
-        <strong>Çalışma aktarımı uygulanmadı</strong>
-
-        <p>
-        Çalışabilirlik raporu olmadığı için doğum öncesi
-        çalışma süresi doğum sonrasına aktarılmış olarak hesaplanmadı.
-        </p>
-
-        </div>
-        `;
-
-    }
-
-
-    /*
-    ÖĞRETMEN TAKVİMİ
-    2026-2027 MEB takvimi
-    */
-
-    let teacherMessage="";
-
-
-    if(law==="657" && job==="teacher"){
-
-        teacherMessage=checkTeacherCalendar(
-            beforeStart,
-            birthDate,
-            workTransferDays
-        );
-
-    }
-
-
-    /*
-    Doğum sonrası bitiş tarihi
-    */
-
-    const afterStart=birthDate;
-
-    const afterEnd=
-        addDays(afterStart,actualAfterDays-1);
-
-
-    document.getElementById("beforeWeeks").textContent=
-        beforeWeeks+" hafta";
-
-    document.getElementById("afterWeeks").textContent=
-        afterWeeks+" hafta";
-
-    document.getElementById("totalWeeks").textContent=
-        (totalDays/7)+" hafta";
-
-    document.getElementById("workWeeks").textContent=
-        workTransferDays>0
-        ? Math.round(workTransferDays/7)+" hafta"
-        : "Aktarım yok";
-
-
-    document.getElementById("beforeDate").textContent=
-        formatDate(beforeStart);
-
-    document.getElementById("birthDateResult").textContent=
-        formatDate(birthDate);
-
-    document.getElementById("afterDate").textContent=
-        formatDate(afterEnd);
-
-
-    document.getElementById("workAnalysis").innerHTML=
-        workMessage;
-
-    document.getElementById("teacherAnalysis").innerHTML=
-        teacherMessage;
-
-
-    /*
-    657 için 24 aya kadar aylıksız izin
-    */
-
-    if(law==="657"){
-
-        const unpaidStart=
-            addDays(afterEnd,1);
-
-        const unpaidEnd=
-            addMonths(unpaidStart,24);
-
-        document.getElementById("unpaidLeave").innerHTML=`
-
-        <div class="info">
-
-        <strong>24 aya kadar aylıksız izin</strong>
-
-        <p>
-        657 sayılı Kanuna tabi memur için doğum sonrası
-        analık izninin bitiminden itibaren isteği üzerine
-        24 aya kadar aylıksız izin hakkı bulunmaktadır.
-        </p>
-
-        <div class="detail-list">
-
-        <div class="detail">
-        <span>Başlangıç</span>
-        <strong>${formatDate(unpaidStart)}</strong>
-        </div>
-
-        <div class="detail">
-        <span>24 aylık dönemin sonu</span>
-        <strong>${formatDate(unpaidEnd)}</strong>
-        </div>
-
-        </div>
-
-        </div>
-
-        `;
-
-    }
-    else{
-
-        document.getElementById("unpaidLeave").innerHTML="";
-
-    }
-
-
-    /*
-    Bilgilendirme
-    */
-
-    document.getElementById("notice").innerHTML=`
-
-    <div class="info">
-
-    <strong>Hesaplama notu</strong>
-
-    <p>
-    Hesaplama 2026 yılında yürürlükte bulunan analık izni
-    düzenlemeleri esas alınarak yapılmıştır.
-    </p>
-
-    <p class="small">
-    Kurum uygulaması, özel durumlar, erken doğum,
-    sağlık raporu ve mevzuat değişiklikleri sonucu etkileyebilir.
-    </p>
-
-    </div>
-
+    let dogumDate = new Date(tarihStr);
+
+    let temelOncesiHafta = (gebelikTipi === 'cogul') ? 10 : 8;
+    let temelSonrasiHafta = 8;
+    
+    let dogumOncesiGun = temelOncesiHafta * 7;
+    let calisilanGun = (doktorRaporu === 'var') ? ((gebelikTipi === 'cogul') ? 14 : 35) : 0;
+
+    let kullanilacakDogumOncesiGun = dogumOncesiGun - calisilanGun;
+    let toplamDogumSonrasiGun = (temelSonrasiHafta * 7) + calisilanGun;
+
+    let izinBitisDate = new Date(dogumDate);
+    izinBitisDate.setDate(dogumDate.getDate() + toplamDogumSonrasiGun);
+
+    const sonucDiv = document.getElementById('sonucAlani');
+    sonucDiv.style.display = 'block';
+    sonucDiv.innerHTML = `
+        • Doğum Öncesi İzin: <b>${kullanilacakDogumOncesiGun} gün</b> (${Math.floor(kullanilacakDogumOncesiGun/7)} hafta)<br>
+        • Doğum Sonrası İzin: <b>${toplamDogumSonrasiGun} gün</b> (${Math.floor(toplamDogumSonrasiGun/7)} hafta)<br>
+        • İzin Bitiş Tarihi: <b>${formatTarih(izinBitisDate)}</b>
     `;
-
-
-    document.getElementById("result").style.display="block";
-
-
-    window.scrollTo({
-        top:document.getElementById("result").offsetTop-20,
-        behavior:"smooth"
-    });
-
 }
 
-
-/*
-Ay ekleme
-*/
-
-function addMonths(date,months){
-
-    const d=new Date(date);
-
-    d.setMonth(d.getMonth()+months);
-
-    return d;
-
+function formatTarih(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return ${day}.${month}.${year};
 }
-
-
-/*
-====================================================
-ÖĞRETMEN TAKVİMİ
-2026-2027 MEB
-====================================================
-*/
-
-function checkTeacherCalendar(
-    start,
-    birth,
-    transferDays
-){
-
-    const periods=[
-
-        {
-            start:new Date(2026,10,16),
-            end:new Date(2026,10,20),
-            name:"1. dönem ara tatili"
-        },
-
-        {
-            start:new Date(2027,0,25),
-            end:new Date(2027,1,5),
-            name:"Yarıyıl (sömestr) tatili"
-        },
-
-        {
-            start:new Date(2027,2,8),
-            end:new Date(2027,2,12),
-            name:"2. dönem ara tatili"
-        }
-
-    ];
-
-
-    let messages=[];
-
-    let totalVacationDays=0;
-
-
-    for(const period of periods){
-
-        const overlapStart=
-            start>period.start
-            ? start
-            : period.start;
-
-        const overlapEnd=
-            birth<period.end
-            ? birth
-            : period.end;
-
-
-        if(overlapStart<=overlapEnd){
-
-            const days=
-                daysBetween(
-                    overlapStart,
-                    overlapEnd
-                )+1;
-
-            totalVacationDays+=days;
-
-            messages.push(`
-                <div class="detail">
-
-                <span>
-                ${period.name}<br>
-                <small>
-                ${formatDate(overlapStart)}
-                -
-                ${formatDate(overlapEnd)}
-                </small>
-                </span>
-
-                <strong>${days} gün</strong>
-
-                </div>
-            `);
-
-        }
-
-    }
-
-
-    if(totalVacationDays===0){
-
-        return `
-        <div class="info">
-
-        <strong>Öğretmen takvimi</strong>
-
-        <p>
-        Doğum öncesi hesaplama döneminde tanımlı
-        MEB tatil dönemi tespit edilmedi.
-        </p>
-
-        </div>
-        `;
-
-    }
-
-
-    return `
-
-    <div class="warning">
-
-    <strong>Öğretmen takvimi analizi</strong>
-
-    <p>
-    Doğum öncesi döneminizin içinde MEB takviminde
-    tatil dönemi bulunmaktadır.
-    </p>
-
-    <div class="detail-list">
-
-    ${messages.join("")}
-
-    </div>
-
-    <br>
-
-    <strong>
-    Tespit edilen tatil süresi:
-    ${totalVacationDays} gün
-    </strong>
-
-    <p class="small">
-    Öğretmenlerin tatil dönemlerine denk gelen doğum öncesi
-    çalışma/izin sürelerinin doğum sonrasına aktarılması
-    mevzuattaki özel kurallara göre değerlendirilir.
-    Bu nedenle tatil günleri otomatik olarak "çalışılmış gün"
-    kabul edilmemiştir.
-    </p>
-
-    </div>
-
-    `;
-
-}
-
 </script>
 
 </body>
